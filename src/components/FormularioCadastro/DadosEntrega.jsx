@@ -21,6 +21,7 @@ function DadosEntrega({ onSubmit }) {
           onChange={(event) => setCep(event.target.value)}
           id="cep"
           label="CEP"
+          name="cep"
           type="number"
           variant="outlined"
           margin="normal"
@@ -31,6 +32,7 @@ function DadosEntrega({ onSubmit }) {
           onChange={(event) => setEndereco(event.target.value)}
           id="endereco"
           label="Endereço"
+          name="endereco"
           type="text"
           fullWidth
           variant="outlined"
@@ -42,6 +44,7 @@ function DadosEntrega({ onSubmit }) {
           onChange={(event) => setNumero(event.target.value)}
           id="numero"
           label="Número"
+          name="numero"
           type="number"
           variant="outlined"
           margin="normal"
@@ -52,6 +55,7 @@ function DadosEntrega({ onSubmit }) {
           onChange={(event) => setEstado(event.target.value)}
           id="estado"
           label="Estado"
+          name="estado"
           type="text"
           variant="outlined"
           margin="normal"
@@ -62,6 +66,7 @@ function DadosEntrega({ onSubmit }) {
           onChange={(event) => setCidade(event.target.value)}
           id="cidade"
           label="Cidade"
+          name="cidade"
           type="text"
           variant="outlined"
           margin="normal"

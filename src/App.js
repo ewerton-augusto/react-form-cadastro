@@ -1,30 +1,28 @@
-
-import './App.css';
-import FormularioCadastro from './components/FormularioCadastro/FormularioCadastro';
-import { Container } from "@material-ui/core";
+import "./App.css";
+import FormularioCadastro from "./components/FormularioCadastro/FormularioCadastro";
+import { Container, Typography } from "@material-ui/core";
+import { validarCPF, validarSenha } from "./models/cadastro";
+import ValidacoesCadastro from "./contexts/ValidacoesCadastro";
 
 function App() {
   return (
     <>
       <Container element="article" maxWidth="sm">
-        <h1>Formulário de Cadastro</h1>
-        <FormularioCadastro onSubmit={onSubmit} validarCPF={validarCPF} />
+        <Typography variant="h3" component="h1" align="center">
+          Formulário de Cadastro
+        </Typography>
+        <ValidacoesCadastro.Provider
+          value={{ cpf: validarCPF, senha: validarSenha }}
+        >
+          <FormularioCadastro onSubmit={onSubmit} />
+        </ValidacoesCadastro.Provider>
       </Container>
-
     </>
   );
 }
 
-function onSubmit(dados){
+function onSubmit(dados) {
   console.log(dados);
-}
-
-function validarCPF(cpf){
-  if(cpf.length !== 11){
-    return {valido: false, msg: "CPF deve ter 11 digitos."};
-  }else{
-    return {valido: true, msg: ""};
-  }
 }
 
 export default App;

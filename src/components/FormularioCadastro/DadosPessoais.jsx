@@ -1,25 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Button, TextField, Switch, FormControlLabel } from "@material-ui/core";
+import ValidacoesCadastro from '../../contexts/ValidacoesCadastro';
+import useErros from "../../hooks/useErros";
 
-function DadosPessoais({ onSubmit, validarCPF }) {
+function DadosPessoais({ onSubmit }) {
   const [nome, setNome] = useState("");
   const [sobrenome, setsobrenome] = useState("");
   const [cpf, setCpf] = useState("");
   const [promocoes, setPromocoes] = useState(true);
   const [novidades, setNovidades] = useState(true);
-  const [erros, setErros] = useState({ cpf: { valido: true, msg: "" } });
+
+  const validacoes = useContext(ValidacoesCadastro);
+  const [erros, validarCampos, possoEnviar] = useErros(validacoes);
 
   return (
     <>
       <form
         onSubmit={(event) => {
           event.preventDefault();
-          onSubmit({ nome, sobrenome, cpf, promocoes, novidades });
+          if (possoEnviar()) {
+            onSubmit({ nome, sobrenome, cpf, promocoes, novidades });
+          }
         }}
       >
         <TextField
           id="nome"
           label="Nome"
+          name="nome"
           fullWidth
           variant="outlined"
           margin="normal"
@@ -30,6 +37,7 @@ function DadosPessoais({ onSubmit, validarCPF }) {
         <TextField
           id="sobrenome"
           label="Sobrenome"
+          name="sobrenome"
           fullWidth
           variant="outlined"
           margin="normal"
@@ -40,6 +48,7 @@ function DadosPessoais({ onSubmit, validarCPF }) {
         <TextField
           id="cpf"
           label="CPF"
+          name="cpf"
           fullWidth
           variant="outlined"
           margin="normal"
@@ -47,18 +56,15 @@ function DadosPessoais({ onSubmit, validarCPF }) {
           onChange={(event) => setCpf(event.target.value)}
           error={!erros.cpf.valido}
           helperText={erros.cpf.msg}
-          onBlur={event => {
-            let validandoCPF = validarCPF(event.target.value);
-            setErros({cpf:validandoCPF});
-          }}
+          onBlur={validarCampos}
           required
         />
 
         <FormControlLabel
           control={
-            <Switch              
+            <Switch
               checked={promocoes}
-              onChange={event => setPromocoes(event.target.checked)}              
+              onChange={(event) => setPromocoes(event.target.checked)}
               name="promocoes"
               color="primary"
             />
@@ -78,7 +84,7 @@ function DadosPessoais({ onSubmit, validarCPF }) {
         />
 
         <Button variant="contained" color="primary" type="submit" fullWidth>
-          Cadastro
+          Próximo
         </Button>
       </form>
     </>
